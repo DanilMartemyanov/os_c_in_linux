@@ -86,7 +86,7 @@ void traverseAndCompare(const char *dir1, const char *dir2, int max_processes) {
             return;
           } else if (pid > 0) {
             active_processes++;
-            printf("Запуск процесса. Количество процессов:%d\n", active_processes);
+            printf("Количество процессов:%d\n", active_processes);
           } else {
             perror("Ошибка при создании процесса");
             return;
