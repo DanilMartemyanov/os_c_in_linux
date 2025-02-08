@@ -31,9 +31,10 @@ void compareFiles(FileInfo *file1_info, FileInfo *file2_info) {
     }
   }
 
-  printf("Process PID=%d, Сравнение файлов: %s и %s\n", getpid(), file_name1, file_name2);
-  printf("Общее количество прочитанных байт: %ld\n", count_bytes);
-  printf("Результат сравнения: %d (0 - одинаковые, 1 - разные)\n", result);
+  printf("PID=%d,файл1:%s и файл2%s, ", getpid(), file_name1, file_name2);
+  printf("байт: %ld ", count_bytes);
+  printf("результат: %d ", result);
+
 
   fclose(file1);
   fclose(file2);
@@ -85,6 +86,7 @@ void traverseAndCompare(const char *dir1, const char *dir2, int max_processes) {
             return;
           } else if (pid > 0) {
             active_processes++;
+            printf("Запуск процесса. Количество процессов:%d\n", active_processes);
           } else {
             perror("Ошибка при создании процесса");
             return;
@@ -96,7 +98,9 @@ void traverseAndCompare(const char *dir1, const char *dir2, int max_processes) {
 
   while (active_processes > 0) {
     wait(NULL);
+    printf("Завершение процесса.");
     active_processes--;
+    printf("Количество процессов:%d\n", active_processes);
   }
 
   closedir(dp1);
