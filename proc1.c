@@ -3,12 +3,15 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 void get_time(const char *process_name, pid_t pid) {
-    time_t mytime = time(NULL);
-    struct tm *now = localtime(&mytime);
-    printf("[%s | PID=%d] Время: %02d:%02d:%02d\n",
-           process_name, pid, now->tm_hour, now->tm_min, now->tm_sec);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    struct tm *now = localtime(&tv.tv_sec);
+    printf("[%s | PID=%d] Время: %02d:%02d:%02d:%03ld\n",
+           process_name, pid, now->tm_hour, now->tm_min, now->tm_sec, tv.tv_usec / 1000);
 }
 
 int main() {
